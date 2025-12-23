@@ -31,7 +31,6 @@ header {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.75rem;
-    align-content: center;
 }
 
 /* Styling for my name in the header */
@@ -48,10 +47,11 @@ header {
     gap: 0.75rem;
     flex-wrap: wrap;
     justify-content: flex-end;
-    align-content: flex-start;
     margin: 0;
     padding: 0;
+    flex: 1 1 auto;
 }
+
 
 /* Navigation link styling */
 .main-nav a {
@@ -281,7 +281,6 @@ footer a {
     .main-nav ul {
         width: 100%;
         justify-content: center;
-        align-content: flex-start;
     }
 
     .main-nav a {
