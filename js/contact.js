@@ -30,3 +30,26 @@ function clearError(input, errorEl) {
   input.classList.remove("input-error");
   input.classList.add("input-valid");
 }
+function validateName(input, errorEl, label) {
+  const value = input.value.trim();
+  const onlyLetters = /^[A-Za-z]+$/.test(value);
+
+  if (value === "") {
+    showError(input, errorEl, `${label} is required.`);
+    return false;
+  }
+  if (!onlyLetters) {
+    showError(input, errorEl, `${label} must contain only letters.`);
+    return false;
+  }
+  clearError(input, errorEl);
+  return true;
+}
+
+firstName.addEventListener("input", function () {
+  validateName(firstName, firstNameError, "First name");
+});
+
+lastName.addEventListener("input", function () {
+  validateName(lastName, lastNameError, "Last name");
+});
