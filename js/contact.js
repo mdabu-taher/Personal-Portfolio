@@ -95,3 +95,54 @@ message.addEventListener("input", function () {
 });
 
 updateCounter();
+function validateSubject() {
+  if (subject.value === "") {
+    showError(subject, subjectError, "Please select a subject.");
+    return false;
+  }
+  clearError(subject, subjectError);
+  return true;
+}
+
+function clearForm() {
+  form.reset();
+
+  [firstName, lastName, email, phone, subject, message].forEach(function (el) {
+    el.classList.remove("input-error", "input-valid");
+  });
+
+  [firstNameError, lastNameError, emailError, phoneError, subjectError, messageError].forEach(function (e) {
+    e.textContent = "";
+    e.classList.remove("show");
+  });
+
+  updateCounter();
+}
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const ok1 = validateName(firstName, firstNameError, "First name");
+  const ok2 = validateName(lastName, lastNameError, "Last name");
+  const ok3 = validateEmail();
+  const ok4 = validateSubject();
+  const ok5 = validateMessage();
+
+  if (!(ok1 && ok2 && ok3 && ok4 && ok5)) return;
+
+  successMessage.textContent = `Thank you ${firstName.value.trim()}! I will contact you soon!`;
+  successMessage.style.display = "block";
+
+  clearForm();
+
+  setTimeout(function () {
+    successMessage.style.display = "none";
+    successMessage.textContent = "";
+  }, 3000);
+});
+
+form.addEventListener("reset", function () {
+  successMessage.style.display = "none";
+  successMessage.textContent = "";
+  setTimeout(updateCounter, 0);
+});
