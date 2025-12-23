@@ -70,3 +70,28 @@ function validateEmail() {
 }
 
 email.addEventListener("input", validateEmail);
+function updateCounter() {
+  const len = message.value.length;
+  charCounter.textContent = `${len} / 20 characters`;
+
+  charCounter.classList.remove("red", "green");
+  if (len < 20) charCounter.classList.add("red");
+  else charCounter.classList.add("green");
+}
+
+function validateMessage() {
+  const value = message.value.trim();
+  if (value.length < 20) {
+    showError(message, messageError, "Message must be at least 20 characters.");
+    return false;
+  }
+  clearError(message, messageError);
+  return true;
+}
+
+message.addEventListener("input", function () {
+  updateCounter();
+  validateMessage();
+});
+
+updateCounter();
