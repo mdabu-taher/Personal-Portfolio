@@ -141,62 +141,65 @@
 
 
     <!-- CONTACT FORM -->
-    <section id="contact" class="section contact fade-in">
+   <section id="contact" class="section contact fade-in">
 
-        <h2>Contact Me</h2>
+    <h2>Contact Me</h2>
 
         <form id="contactForm" novalidate>
-            <div class="form-row">
-                <label for="firstName">First Name</label>
-                <input id="firstName" name="firstName" type="text" required>
-                <small class="error-message" id="firstNameError"></small>
-            </div>
 
-            <div class="form-row">
-                <label for="lastName">Last Name</label>
-                <input id="lastName" name="lastName" type="text" required>
-                <small class="error-message" id="lastNameError"></small>
+            <div class="two-cols">
+
+                <div class="form-row">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" name="firstName" type="text" required>
+                    <div id="firstNameError" class="error"></div>
+                </div>
+
+                <div class="form-row">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" name="lastName" type="text" required>
+                    <div id="lastNameError" class="error"></div>
+                </div>
+
             </div>
 
             <div class="form-row">
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email" required>
-                <small class="error-message" id="emailError"></small>
-            </div>
-
-            <div class="form-row">
-                <label for="phone">Phone Number (optional)</label>
-                <input id="phone" name="phone" type="tel">
-                <small class="error-message" id="phoneError"></small>
+                <div id="emailError" class="error"></div>
             </div>
 
             <div class="form-row">
                 <label for="subject">Subject</label>
                 <select id="subject" name="subject" required>
                     <option value="">Select a subject</option>
-                    <option value="General Inquiry">General Inquiry</option>
                     <option value="Collaboration">Collaboration</option>
                     <option value="Job Opportunity">Job Opportunity</option>
+                    <option value="General Question">General Question</option>
                 </select>
-                <small class="error-message" id="subjectError"></small>
+                <div id="subjectError" class="error"></div>
             </div>
 
             <div class="form-row">
                 <label for="message">Message</label>
                 <textarea id="message" name="message" rows="4" required></textarea>
-                <div class="char-counter" id="charCounter">0 / 20 characters</div>
-                <small class="error-message" id="messageError"></small>
+                <div id="charCounter" class="char-counter">0 / 20 characters</div>
+                <div id="messageError" class="error"></div>
             </div>
 
             <div class="form-actions">
-                <button type="submit">Submit</button>
-                <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
+                <button type="submit">Send Message</button>
+                <button type="button" class="secondary" id="clearBtn">Clear</button>
             </div>
 
-            <div class="success-message" id="successMessage"></div>
+            <div id="successMessage" class="success-message">
+                Thank you! I will get back to you soon.
+            </div>
+
         </form>
 
     </section>
+
 
 </main>
 
@@ -214,7 +217,7 @@
         <a href="#">Terms of Use</a>
     </p>
 </footer>
-<script src="js/contact.js"></script>
+<script src="./js/contact.js"></script>
 
 </body>
 </html>

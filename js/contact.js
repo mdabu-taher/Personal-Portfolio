@@ -3,146 +3,157 @@ const form = document.getElementById("contactForm");
 const firstName = document.getElementById("firstName");
 const lastName = document.getElementById("lastName");
 const email = document.getElementById("email");
-const phone = document.getElementById("phone");
 const subject = document.getElementById("subject");
 const message = document.getElementById("message");
 
 const firstNameError = document.getElementById("firstNameError");
 const lastNameError = document.getElementById("lastNameError");
 const emailError = document.getElementById("emailError");
-const phoneError = document.getElementById("phoneError");
 const subjectError = document.getElementById("subjectError");
 const messageError = document.getElementById("messageError");
 
 const charCounter = document.getElementById("charCounter");
 const successMessage = document.getElementById("successMessage");
+const clearBtn = document.getElementById("clearBtn");
+
+let successTimer = null;
 
 function showError(input, errorEl, msg) {
-  errorEl.textContent = msg;
-  errorEl.classList.add("show");
-  input.classList.add("input-error");
-  input.classList.remove("input-valid");
+    input.classList.add("input-error");
+    input.classList.remove("input-valid");
+    errorEl.textContent = msg;
+    errorEl.classList.add("show");
 }
 
 function clearError(input, errorEl) {
-  errorEl.textContent = "";
-  errorEl.classList.remove("show");
-  input.classList.remove("input-error");
-  input.classList.add("input-valid");
-}
-function validateName(input, errorEl, label) {
-  const value = input.value.trim();
-  const onlyLetters = /^[A-Za-z]+$/.test(value);
-
-  if (value === "") {
-    showError(input, errorEl, `${label} is required.`);
-    return false;
-  }
-  if (!onlyLetters) {
-    showError(input, errorEl, `${label} must contain only letters.`);
-    return false;
-  }
-  clearError(input, errorEl);
-  return true;
+    input.classList.remove("input-error");
+    input.classList.add("input-valid");
+    errorEl.textContent = "";
+    errorEl.classList.remove("show");
 }
 
-firstName.addEventListener("input", function () {
-  validateName(firstName, firstNameError, "First name");
-});
+function validateName(input, errorEl, fieldName) {
+    const value = input.value.trim();
+    const onlyLetters = /^[A-Za-z]+$/;
 
-lastName.addEventListener("input", function () {
-  validateName(lastName, lastNameError, "Last name");
-});
+    if (value.length < 2) {
+        showError(input, errorEl, `${fieldName} must be at least 2 characters.`);
+        return false;
+    }
+
+    if (!onlyLetters.test(value)) {
+        showError(input, errorEl, `${fieldName} must contain only letters.`);
+        return false;
+    }
+
+    clearError(input, errorEl);
+    return true;
+}
+
 function validateEmail() {
-  const value = email.value.trim();
-  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const value = email.value.trim();
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (value === "") {
-    showError(email, emailError, "Email is required.");
-    return false;
-  }
-  if (!ok) {
-    showError(email, emailError, "Please enter a valid email address.");
-    return false;
-  }
-  clearError(email, emailError);
-  return true;
+    if (!pattern.test(value)) {
+        showError(email, emailError, "Please enter a valid email address.");
+        return false;
+    }
+
+    clearError(email, emailError);
+    return true;
 }
 
-email.addEventListener("input", validateEmail);
-function updateCounter() {
-  const len = message.value.length;
-  charCounter.textContent = `${len} / 20 characters`;
-
-  charCounter.classList.remove("red", "green");
-  if (len < 20) charCounter.classList.add("red");
-  else charCounter.classList.add("green");
+function validateSubject() {
+    if (subject.value.trim() === "") {
+        showError(subject, subjectError, "Please select a subject.");
+        return false;
+    }
+    clearError(subject, subjectError);
+    return true;
 }
 
 function validateMessage() {
-  const value = message.value.trim();
-  if (value.length < 20) {
-    showError(message, messageError, "Message must be at least 20 characters.");
-    return false;
-  }
-  clearError(message, messageError);
-  return true;
+    const value = message.value.trim();
+    if (value.length < 20) {
+        showError(message, messageError, "Message must be at least 20 characters.");
+        return false;
+    }
+    clearError(message, messageError);
+    return true;
 }
 
-message.addEventListener("input", function () {
-  updateCounter();
-  validateMessage();
-});
+function updateCounter() {
+    const len = message.value.length;
+    charCounter.textContent = `${len} / 20 characters`;
 
-updateCounter();
-function validateSubject() {
-  if (subject.value === "") {
-    showError(subject, subjectError, "Please select a subject.");
-    return false;
-  }
-  clearError(subject, subjectError);
-  return true;
+    charCounter.classList.remove("red", "green");
+    if (len < 20) charCounter.classList.add("red");
+    else charCounter.classList.add("green");
 }
 
 function clearForm() {
-  form.reset();
+    form.reset();
 
-  [firstName, lastName, email, phone, subject, message].forEach(function (el) {
-    el.classList.remove("input-error", "input-valid");
-  });
+    [firstName, lastName, email, subject, message].forEach((el) => {
+        el.classList.remove("input-error", "input-valid");
+    });
 
-  [firstNameError, lastNameError, emailError, phoneError, subjectError, messageError].forEach(function (e) {
-    e.textContent = "";
-    e.classList.remove("show");
-  });
+    [firstNameError, lastNameError, emailError, subjectError, messageError].forEach((el) => {
+        el.textContent = "";
+        el.classList.remove("show");
+    });
 
-  updateCounter();
+    updateCounter();
 }
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const ok1 = validateName(firstName, firstNameError, "First name");
-  const ok2 = validateName(lastName, lastNameError, "Last name");
-  const ok3 = validateEmail();
-  const ok4 = validateSubject();
-  const ok5 = validateMessage();
-
-  if (!(ok1 && ok2 && ok3 && ok4 && ok5)) return;
-
-  successMessage.textContent = `Thank you ${firstName.value.trim()}! I will contact you soon!`;
-  successMessage.style.display = "block";
-
-  clearForm();
-
-  setTimeout(function () {
+function hideSuccess() {
     successMessage.style.display = "none";
-    successMessage.textContent = "";
-  }, 3000);
+    if (successTimer) {
+        clearTimeout(successTimer);
+        successTimer = null;
+    }
+}
+
+function showSuccess(name) {
+    successMessage.textContent = `Thank you ${name}! I will contact you soon!`;
+    successMessage.style.display = "block";
+
+    if (successTimer) clearTimeout(successTimer);
+    successTimer = setTimeout(() => {
+        hideSuccess();
+    }, 3000);
+}
+
+firstName.addEventListener("input", () => validateName(firstName, firstNameError, "First name"));
+lastName.addEventListener("input", () => validateName(lastName, lastNameError, "Last name"));
+email.addEventListener("input", validateEmail);
+subject.addEventListener("change", validateSubject);
+message.addEventListener("input", () => {
+    updateCounter();
+    validateMessage();
 });
 
-form.addEventListener("reset", function () {
-  successMessage.style.display = "none";
-  successMessage.textContent = "";
-  setTimeout(updateCounter, 0);
+clearBtn.addEventListener("click", () => {
+    hideSuccess();
+    clearForm();
 });
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    hideSuccess();
+
+    const okFirst = validateName(firstName, firstNameError, "First name");
+    const okLast = validateName(lastName, lastNameError, "Last name");
+    const okEmail = validateEmail();
+    const okSubject = validateSubject();
+    const okMsg = validateMessage();
+
+    if (okFirst && okLast && okEmail && okSubject && okMsg) {
+        const name = firstName.value.trim();
+        clearForm();
+        showSuccess(name);
+    }
+});
+
+updateCounter();
+hideSuccess();
