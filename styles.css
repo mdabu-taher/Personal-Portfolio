@@ -39,14 +39,14 @@ header {
 
 /* Horizontal list for navigation links */
 .main-nav ul {
-    list-style: none;
+    list-style:none;
     display: flex;
     gap: 1rem;
 }
 
 /* Navigation link styling */
 .main-nav a {
-    text-decoration: none;
+    text-decoration:none;
     color: white;
     padding: 0.45rem 0.85rem;
     border-radius: 4px;
@@ -295,4 +295,82 @@ footer a {
     button {
         width: 100%;
     }
+}
+/* Contact form: 2 columns for first/last name on desktop */
+.two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .two-cols {
+        grid-template-columns: 1fr;
+    }
+}
+
+input, textarea, select {
+    border: 1px solid #ccc;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Focus state (blue border) */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+/* Error + valid states controlled by JS */
+.input-error {
+    border-color: #dc3545 !important;
+}
+
+.input-valid {
+    border-color: #198754 !important;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 0.85rem;
+    min-height: 1em;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.error.show {
+    opacity: 1;
+}
+
+.char-counter {
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.char-counter.red {
+    color: #dc3545;
+}
+
+.char-counter.green {
+    color: #198754;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+button.secondary {
+    background: #e5eaf2;
+    color: #0b1f3a;
+}
+
+.success-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #d1e7dd;
+    border: 1px solid #badbcc;
+    color: #0f5132;
+    border-radius: 6px;
+    display: none;
 }
