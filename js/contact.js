@@ -53,3 +53,20 @@ firstName.addEventListener("input", function () {
 lastName.addEventListener("input", function () {
   validateName(lastName, lastNameError, "Last name");
 });
+function validateEmail() {
+  const value = email.value.trim();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  if (value === "") {
+    showError(email, emailError, "Email is required.");
+    return false;
+  }
+  if (!ok) {
+    showError(email, emailError, "Please enter a valid email address.");
+    return false;
+  }
+  clearError(email, emailError);
+  return true;
+}
+
+email.addEventListener("input", validateEmail);
