@@ -29,28 +29,39 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-content: center;
 }
 
 /* Styling for my name in the header */
 .site-title {
     font-size: 1.6rem;
     font-weight: bold;
+    flex: 0 0 auto;
 }
 
 /* Horizontal list for navigation links */
 .main-nav ul {
-    list-style:none;
+    list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: flex-start;
+    margin: 0;
+    padding: 0;
 }
 
 /* Navigation link styling */
 .main-nav a {
-    text-decoration:none;
+    display: block;
+    text-decoration: none;
     color: white;
     padding: 0.45rem 0.85rem;
     border-radius: 4px;
     transition: 0.25s ease;
+    white-space: nowrap;
 }
 
 /* Hover effect to make the menu feel interactive */
@@ -257,17 +268,24 @@ footer a {
 /*  MOBILE RESPONSIVE DESIGN */
 @media (max-width: 768px) {
 
-    /* Stack the navigation on mobile */
     .main-nav {
         flex-direction: column;
-        gap: 0.5rem;
+        align-items: center;
     }
 
-    /* Allow navigation to scroll sideways if too long */
+    .site-title {
+        width: 100%;
+        text-align: center;
+    }
+
     .main-nav ul {
-        overflow-x: auto;
-        white-space: nowrap;
-        gap: 1rem;
+        width: 100%;
+        justify-content: center;
+        align-content: flex-start;
+    }
+
+    .main-nav a {
+        padding: 0.4rem 0.65rem;
     }
 
     /* Stack image and text vertically in About section */
@@ -296,6 +314,7 @@ footer a {
         width: 100%;
     }
 }
+
 /* Contact form: 2 columns for first/last name on desktop */
 .two-cols {
     display: grid;
